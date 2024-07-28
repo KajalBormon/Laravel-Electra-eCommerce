@@ -263,7 +263,7 @@
                                     <div class="product-btns">
                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                         <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                        <button class="quick-view"><a href="{{ route('product_details',$product->id) }}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
                                     </div>
                                 </div>
                                <a href="{{ route('add.cart',$product->id) }}">
@@ -271,10 +271,10 @@
                                     <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                 </div>
                                </a>
-                            </div>                            
+                            </div>
                             @endforeach
                         </div>
-                       
+
                         <!-- /product -->
                     </div>
                     <!-- /store products -->
@@ -295,7 +295,7 @@
                 <!-- /STORE -->
             </div>
             <!-- /row -->
-            
+
         </div>
         <!-- /container -->
     </div>
@@ -335,6 +335,6 @@
         <!-- /container -->
     </div>
     <!-- /NEWSLETTER -->	<!-- NEWSLETTER -->
-	
+
 
 @include('home.footer')

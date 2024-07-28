@@ -8,6 +8,7 @@ use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
+
 class AdminController extends Controller
 {
     public function index(){
@@ -34,7 +35,7 @@ class AdminController extends Controller
                                 ->orWhere('category','LIKE','%'.$search.'%')
                                 ->get();
 
-                session()->forget('search_result');
+                session()->forget(['search_result']);
         }
         return view('admin.view_product',compact('products'));
     }
@@ -46,7 +47,7 @@ class AdminController extends Controller
 
     public function on_the_way($id){
         $order = Order::find($id);
-        
+
         $order->update([
                 'status' => 'on the way'
             ]);
@@ -55,7 +56,7 @@ class AdminController extends Controller
 
     public function delivered($id){
         $order = Order::find($id);
-        
+
         $order->update([
                 'status' => 'Delivered'
             ]);
@@ -67,7 +68,7 @@ class AdminController extends Controller
         $data = Order::find($id);
         $pdf = pdf::loadView('admin.invoice',compact('data'));
         return $pdf->download('invoice.pdf');
-    } 
+    }
 
 
 }

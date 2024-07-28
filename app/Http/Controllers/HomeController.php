@@ -7,6 +7,9 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Session;
+use Stripe;
+
 
 class HomeController extends Controller
 {
@@ -22,7 +25,7 @@ class HomeController extends Controller
             $count = '';
             return view('home.index');
         }
-        
+
     }
 
     public function shop(){
@@ -35,9 +38,9 @@ class HomeController extends Controller
             return view('home.shop',compact('products','count','cart_items'));
         }else{
             $count = '';
-            return view('home.shop');
+            return view('home.shop',compact('products'));
         }
-        
+
     }
 
     public function add_cart($id){
@@ -65,7 +68,7 @@ class HomeController extends Controller
         $cart_items = Cart::where('user_id',$user_id)->get();
 
         return view('home.view_cart',compact('count','cart_items'));
-    } 
+    }
 
     public function checkout(){
         $products = Product::all();
@@ -98,7 +101,7 @@ class HomeController extends Controller
 
     public function myorder(){
         $products = Product::all();
- 
+
         if(Auth::id()){
             $user_id = Auth::user()->id;
             $count = Cart::where('user_id',$user_id)->count();
@@ -106,9 +109,46 @@ class HomeController extends Controller
         }else{
             $count = '';
         }
-        
+
         $orders = Order::all();
         return view('home.myorder',compact('products','count','cart_items','orders'));
+    }
+
+    public function product_details($id){
+        $product = Product::find($id);
+
+        if(Auth::id()){
+            $user_id = Auth::user()->id;
+            $count = Cart::where('user_id',$user_id)->count();
+            $cart_items = Cart::where('user_id',$user_id)->get();
+        }else{
+            $count = '';
+        }
+
+        $orders = Order::all();
+        return view('home.product',compact('product','count','cart_items','orders'));
+    }
+
+    public function stripe($total_price)
+    {
+
+        return view('home.stripe',compact('total_price'));
+    }
+
+    public function stripePost(Request $request,$total_price)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create ([
+                "amount" => $total_price * 100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Test payment Successfully Done."
+        ]);
+
+        Session::flash('success', 'Payment successful!');
+
+        return back();
     }
 
 

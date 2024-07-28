@@ -59,14 +59,14 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						
+
 						{{-- <li><a href="{{ route('register') }}"><i class="fa fa-user-o"></i> My Account</a></li> --}}
-						
-						
+
+
 						@if(Route::has('login'))
 						@auth
-						<li>	
-							
+						<li>
+
 							<form action="{{ route('logout') }}" method="post">
 								@csrf
 								<i class="fa fa-user-o"></i><input type="submit" value="Logout">
@@ -145,7 +145,7 @@
 									<div class="cart-dropdown">
 										<div class="cart-list">
 											<?php
-												$total_price = 0;	
+												$total_price = 0;
 											?>
 											@foreach($cart_items as $cart)
 											<div class="product-widget">
@@ -162,7 +162,7 @@
 											</div>
 											<?php
 												$total_price = $total_price + $cart->product->price;
-											?> 
+											?>
 											@endforeach
 
 										</div>
@@ -177,7 +177,7 @@
 									</div>
 								</div>
 								<!-- /Cart -->
-								
+
 								<!-- Menu Toogle -->
 								<div class="menu-toggle">
 									<a href="#">

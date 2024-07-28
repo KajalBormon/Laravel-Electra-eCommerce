@@ -60,7 +60,7 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('view_cart','view_cart')
         ->middleware(['auth','verified'])
         ->name('view_cart');
-    
+
     Route::get('product_delete/{id}','product_delete')->name('product_delete');
 
     Route::get('checkout','checkout')->name('checkout');
@@ -69,13 +69,18 @@ Route::controller(HomeController::class)->group(function(){
 
     Route::get('myorder','myorder')->name('myorder');
 
+    Route::get('product_details/{id}','product_details')->name('product_details');
+
+    Route::get('stripe/{total_price}', 'stripe')->name('stripe');
+    Route::post('stripe/{total_price}', 'stripePost')->name('stripe.post');
+
 
 });
 
 
 
 
-        
+
 
 
 
